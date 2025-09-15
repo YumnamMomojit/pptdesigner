@@ -1,0 +1,52 @@
+import type { Template } from '../types';
+
+export const templates: Template[] = [
+  {
+    id: 'template-1',
+    name: 'Corporate Clean',
+    category: 'Business',
+    description: 'A minimalist and professional design with a blue and grey color palette.',
+    previewImageUrl: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=400&h=225&fit=crop',
+    stylePrompt: 'A professional, corporate style with clean lines, a minimalist aesthetic, and a blue and grey color palette. Use sans-serif fonts. Images should be high-quality photorealistic representations of business concepts.',
+  },
+  {
+    id: 'template-2',
+    name: 'Modern Tech',
+    category: 'Technology',
+    description: 'Dark mode with vibrant gradients and futuristic illustrations.',
+    previewImageUrl: 'https://images.unsplash.com/photo-1557682250-33bd709cbe85?w=400&h=225&fit=crop',
+    stylePrompt: 'A dark mode theme with vibrant, futuristic gradients (cyan, magenta, purple). Use sleek, modern vector illustrations and icons for visuals. The tone should be innovative and forward-thinking.',
+  },
+  {
+    id: 'template-6',
+    name: 'Technical Diagram',
+    category: 'Technology',
+    description: 'Generates slides with technical explanations and Mermaid.js diagrams.',
+    previewImageUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=225&fit=crop',
+    stylePrompt: 'A clean, technical presentation style using a monospace font for code and diagrams. For any requested diagrams (flowcharts, sequence diagrams, etc.), you MUST generate the diagram definition using Mermaid.js syntax inside a markdown code block like this: ```mermaid\ngraph TD;\nA-->B;\n```. Keep slide text concise and technical. Do not generate an image prompt if a diagram is present.',
+  },
+  {
+    id: 'template-3',
+    name: 'Education Chalkboard',
+    category: 'Education',
+    description: 'A friendly and engaging design that resembles a classroom chalkboard.',
+    previewImageUrl: 'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?w=400&h=225&fit=crop',
+    stylePrompt: 'A design that resembles a classroom chalkboard. Use handwritten or chalk-style fonts. Illustrations should be charming, hand-drawn sketches or doodles. The color palette should be simple with off-white text on a dark green or black background.',
+  },
+  {
+    id: 'template-4',
+    name: 'Creative Portfolio',
+    category: 'Creative',
+    description: 'A bold and artistic layout with a focus on visuals and typography.',
+    previewImageUrl: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?w=400&h=225&fit=crop',
+    stylePrompt: 'An artistic and creative layout. Use bold, expressive typography and a vibrant color palette. Images should be abstract, artistic, and visually striking. The overall feel should be imaginative and unconventional.',
+  },
+  {
+    id: 'template-5',
+    name: 'Simple Pitch',
+    category: 'Business',
+    description: 'Clean, simple, and direct. Focuses on clarity and readability for startup pitches.',
+    previewImageUrl: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=400&h=225&fit=crop',
+    stylePrompt: 'A clean, minimal, and modern business style, focusing on clarity and readability. Use a simple color scheme (e.g., white, black, and one accent color like blue or green). Visuals should be simple icons and charts.',
+  },
+];

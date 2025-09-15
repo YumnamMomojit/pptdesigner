@@ -1,0 +1,5 @@
+{
+  "name": "AI Presentation Pro",
+  "description": "An AI-powered application to generate and edit stunning presentations. Users can provide a topic to generate full slides with titles, bullets, images, and speaker notes, or use an interactive editor with AI enhancements.",
+  "requestFramePermissions": []
+}
