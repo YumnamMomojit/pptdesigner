@@ -18,6 +18,14 @@ export const templates: Template[] = [
     stylePrompt: 'A dark mode theme with vibrant, futuristic gradients (cyan, magenta, purple). Use sleek, modern vector illustrations and icons for visuals. The tone should be innovative and forward-thinking.',
   },
   {
+    id: 'template-medhavi',
+    name: 'Medhavi University',
+    category: 'Education',
+    description: 'Professional and academic theme with a distinct header and logo.',
+    previewImageUrl: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=225&fit=crop',
+    stylePrompt: 'A professional and academic presentation style for a skills university. Use a primary color palette of cyan blue and dark grey on a white background. Visuals should be clean illustrations or professional photos related to technology, programming (HTML, JS, CSS), and problem-solving concepts. Keep the tone informative and educational.',
+  },
+  {
     id: 'template-6',
     name: 'Technical Diagram',
     category: 'Technology',

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import type { Presentation, Slide } from '../types';
+import type { Presentation, Slide, Template } from '../types';
 import { SlideThumbnail } from './SlideThumbnail';
 import { SlidePreview } from './SlidePreview';
 import { SpeakerNotes } from './SpeakerNotes';
@@ -9,11 +9,11 @@ import { generateImageForPrompt } from '../services/geminiService';
 
 interface PresentationEditorProps {
   presentation: Presentation;
-  templateStylePrompt?: string;
+  template?: Template;
   onUpdatePresentation: (updatedPresentation: Presentation) => void;
 }
 
-export const PresentationEditor: React.FC<PresentationEditorProps> = ({ presentation, templateStylePrompt, onUpdatePresentation }) => {
+export const PresentationEditor: React.FC<PresentationEditorProps> = ({ presentation, template, onUpdatePresentation }) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [isRegenerating, setIsRegenerating] = useState<string | null>(null); // holds slide id
 
@@ -23,7 +23,7 @@ export const PresentationEditor: React.FC<PresentationEditorProps> = ({ presenta
     if (isRegenerating) return;
     setIsRegenerating(slide.id);
     try {
-      const newImageUrl = await generateImageForPrompt(slide.image_prompt, templateStylePrompt);
+      const newImageUrl = await generateImageForPrompt(slide.image_prompt, template?.stylePrompt);
       const updatedSlides = presentation.slides.map(s => 
         s.id === slide.id ? { ...s, imageUrl: newImageUrl } : s
       );
@@ -34,7 +34,7 @@ export const PresentationEditor: React.FC<PresentationEditorProps> = ({ presenta
     } finally {
       setIsRegenerating(null);
     }
-  }, [isRegenerating, presentation, onUpdatePresentation, templateStylePrompt]);
+  }, [isRegenerating, presentation, onUpdatePresentation, template]);
 
   return (
     <div className="h-screen w-full flex flex-col bg-slate-900 overflow-hidden">
@@ -59,7 +59,7 @@ export const PresentationEditor: React.FC<PresentationEditorProps> = ({ presenta
             {/* Center: Main Slide Preview & Speaker Notes */}
             <section className="flex-1 w-3/5 flex flex-col overflow-hidden">
                 <div className="flex-1 relative bg-black">
-                    {activeSlide && <SlidePreview slide={activeSlide} isRegenerating={isRegenerating === activeSlide.id} />}
+                    {activeSlide && <SlidePreview slide={activeSlide} isRegenerating={isRegenerating === activeSlide.id} template={template} />}
                 </div>
                  <div className="h-1/4 bg-slate-800 border-t border-slate-700 overflow-hidden">
                     {activeSlide && <SpeakerNotes notes={activeSlide.speaker_notes} />}

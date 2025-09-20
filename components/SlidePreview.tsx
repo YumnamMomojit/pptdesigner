@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
-import type { Slide } from '../types';
-import { ImageIcon } from './icons';
+import React, { useEffect, useState } from 'react';
+import type { Slide, Template } from '../types';
+import { ImageIcon, MedhaviLogo } from './icons';
 import mermaid from 'mermaid';
 
 // Mermaid rendering component
@@ -47,35 +47,66 @@ const Mermaid: React.FC<{ chart: string }> = ({ chart }) => {
   );
 };
 
-
-export const SlidePreview: React.FC<{ slide: Slide; isRegenerating: boolean; }> = ({ slide, isRegenerating }) => {
-  const containsMermaid = slide.bullets.some(b => b.trim().startsWith('```mermaid'));
-
-  return (
-    <div className="w-full h-full flex flex-col md:flex-row bg-slate-800 text-white">
-      {/* Left side: Text content */}
-      <div className={`w-full ${containsMermaid ? 'md:w-full' : 'md:w-1/2'} p-8 flex flex-col justify-center`}>
-        <h2 className="text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-500 mb-6">
-          {slide.title}
-        </h2>
-        <div className="space-y-4 text-lg text-slate-300">
-          {slide.bullets.map((bullet, index) => {
-            if (bullet.trim().startsWith('```mermaid')) {
-              return <Mermaid key={index} chart={bullet} />;
-            }
-            return (
-              <div key={index} className="flex items-start">
-                <span className="text-indigo-400 mr-3 mt-1">&#9679;</span>
-                <span>{bullet}</span>
-              </div>
-            );
-          })}
+// Medhavi theme wrapper
+const MedhaviTheme: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    return (
+        <div className="w-full h-full flex flex-col bg-white text-gray-800 relative">
+            <div className="absolute top-0 left-0 w-full h-3 flex">
+                <div className="w-[40%]" style={{ backgroundColor: '#4A4A4A' }}></div>
+                <div className="w-[20%]" style={{ backgroundColor: '#00AEEF' }}></div>
+                <div className="w-[40%]" style={{ backgroundColor: '#4A4A4A' }}></div>
+            </div>
+            
+            <header className="p-6 pt-10">
+                <MedhaviLogo />
+            </header>
+            
+            <main className="flex-1 flex overflow-hidden p-6">
+                {children}
+            </main>
         </div>
-      </div>
+    );
+};
 
-      {/* Right side: Image (only if no mermaid diagram) */}
-      {!containsMermaid && (
-         <div className="w-full md:w-1/2 h-64 md:h-full bg-slate-900 flex items-center justify-center relative">
+
+export const SlidePreview: React.FC<{ slide: Slide; isRegenerating: boolean; template?: Template; }> = ({ slide, isRegenerating, template }) => {
+  const containsMermaid = slide.bullets.some(b => b.trim().startsWith('```mermaid'));
+  const isMedhaviTheme = template?.id === 'template-medhavi';
+
+  const titleClasses = isMedhaviTheme 
+    ? 'text-gray-800' 
+    : 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-500';
+  
+  const bulletContainerClasses = isMedhaviTheme ? 'text-gray-700' : 'text-slate-300';
+  const bulletPointClasses = isMedhaviTheme ? 'text-cyan-600' : 'text-indigo-400';
+  const imageContainerClasses = isMedhaviTheme ? 'bg-gray-100' : 'bg-slate-900';
+  const mainContainerClasses = isMedhaviTheme ? '' : 'bg-slate-800 text-white';
+
+  const slideContent = (
+      <div className={`w-full h-full flex flex-col md:flex-row ${mainContainerClasses}`}>
+        {/* Left side: Text content */}
+        <div className={`w-full ${containsMermaid ? 'md:w-full' : 'md:w-1/2'} p-8 flex flex-col justify-center`}>
+          <h2 className={`text-3xl lg:text-4xl font-bold mb-6 ${titleClasses}`}>
+            {slide.title}
+          </h2>
+          <div className={`space-y-4 text-lg ${bulletContainerClasses}`}>
+            {slide.bullets.map((bullet, index) => {
+              if (bullet.trim().startsWith('```mermaid')) {
+                return <Mermaid key={index} chart={bullet} />;
+              }
+              return (
+                <div key={index} className="flex items-start">
+                  <span className={`${bulletPointClasses} mr-3 mt-1`}>&#9679;</span>
+                  <span>{bullet}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Right side: Image (only if no mermaid diagram) */}
+        {!containsMermaid && (
+         <div className={`w-full md:w-1/2 h-64 md:h-full flex items-center justify-center relative ${imageContainerClasses}`}>
          {slide.imageUrl ? (
            <>
              <img
@@ -99,7 +130,13 @@ export const SlidePreview: React.FC<{ slide: Slide; isRegenerating: boolean; }> 
            </div>
          )}
        </div>
-      )}
-    </div>
+        )}
+      </div>
   );
+
+  if (isMedhaviTheme) {
+    return <MedhaviTheme>{slideContent}</MedhaviTheme>;
+  }
+
+  return slideContent;
 };

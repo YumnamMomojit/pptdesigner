@@ -48,7 +48,7 @@ function App() {
         return <div className="w-full max-w-2xl mx-auto"><LoadingIndicator step={loadingStep} /></div>;
       case 'presenting':
         if (presentation) {
-          return <PresentationEditor presentation={presentation} templateStylePrompt={currentTemplate?.stylePrompt} onUpdatePresentation={handleUpdatePresentation} />;
+          return <PresentationEditor presentation={presentation} template={currentTemplate} onUpdatePresentation={handleUpdatePresentation} />;
         }
         // Fallback to error state if presentation is null
         setAppState('error');
